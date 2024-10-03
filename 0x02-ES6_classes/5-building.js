@@ -1,18 +1,44 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-underscore-dangle */
+
+/*
+ * some building and construction
+ * building some skycrappers
+ * and warn people to evacuate the buildings
+ * using static methods
+ */
+
 export default class Building {
   constructor(sqft) {
-    // Check if the current class (subclass) has implemented evacuationWarningMessage
     if (
       new.target !== Building &&
-      Object.getPrototypeOf(this).evacuationWarningMessage === undefined
+      this.evacuationWarningMessage === undefined
     ) {
-      throw Error(
+      throw new Error(
         'Class extending Building must override evacuationWarningMessage'
       );
+    } else {
+      if (typeof sqft !== 'number') {
+        throw new TypeError('Provide valid dimensions');
+      }
+      this._sqft = sqft;
     }
-    this._sqft = sqft;
   }
 
   get sqft() {
     return this._sqft;
+  }
+
+  set sqft(dimensions) {
+    if (typeof dimensions !== 'number') {
+      throw new TypeError('Provide valid dimensions');
+    }
+    this._sqft = dimensions;
+  }
+
+  evacuationWarningMessage() {
+    throw new Error(
+      'Class extending Building must override evacuationWarningMessage'
+    );
   }
 }
